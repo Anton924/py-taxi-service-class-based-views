@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model
+from django.db.models import Prefetch
 from django.shortcuts import render
 from django.views import generic
 
@@ -34,10 +34,12 @@ class CarDetailView(generic.DetailView):
 
 
 class DriverListView(generic.ListView):
-    model = get_user_model()
+    model = Driver
     paginate_by = 5
 
 
 class DriverDetailView(generic.DetailView):
-    model = get_user_model()
-    queryset = get_user_model().objects.prefetch_related("cars")
+    model = Driver
+    queryset = Driver.objects.prefetch_related(
+        Prefetch("cars", queryset=Car.objects.select_related("manufacturer"))
+    )

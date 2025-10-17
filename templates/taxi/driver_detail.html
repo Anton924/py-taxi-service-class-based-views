@@ -1,14 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-  <p><strong>First name: </strong>{{ driver.first_name }}</p>
-  <p><strong>Last name: </strong>{{ driver.last_name }}</p>
+  <p><strong>Name: </strong>{{ driver }}</p>
   <hr>
   <div class="ml-3">
     <h3>Driver's cars:</h3>
     <ul>
       {% for car in driver.cars.all %}
-        <li>{{ car.model }}</li>
-        <hr>
+        <li><a href="{% url 'taxi:car-detail' car.pk %}">{{ car }}</a><hr></li>
       {% empty %}
         <p>This driver does not have cars</p>
       {% endfor %}
